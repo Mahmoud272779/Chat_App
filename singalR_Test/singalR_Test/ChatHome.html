@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-1.6.4.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="signalr/hubs"></script>
+    <script>
+        $(function () {
+
+            prox = $.connection.chat;
+            $.connection.hub.start();
+            prox.client.newMessage = function (name, message) {
+
+                $("#chatBody").append("<li>" + name + ": " + message+"</li>");
+
+            }
+
+            name = prompt("Enter Your Name: ");
+
+        })
+
+        function send()
+        {
+            prox.server.sendMessage(name, $("#txt").val());
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <input type="text" id="txt" />
+        <input type="button" id="btn" value="Send" onclick="send()"/>
+    </div>
+    <div>
+        <ul id="chatBody">
+
+        </ul>
+    </div>
+</body>
+</html>
